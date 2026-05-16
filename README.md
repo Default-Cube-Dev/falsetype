@@ -8,9 +8,9 @@
 \- Umm... idk man <br>
 \- I have an idea, i will make my own library :D <br>
 \- Everybody starts out full of hopes and dreams, but then they lose their mind because they don't know how to convert big endian to little... <br>
-\- ~huh, wierdo...~ <br>
+\- \~huh, wierdo...\~ <br>
 \*2 moths of pain and suffering later\* <br>
-\- ~maybe he was right and i should just use freetype...~ <br>
+\- \~maybe he was right and i should just use freetype...\~ <br>
 
 ---------------------------
 
