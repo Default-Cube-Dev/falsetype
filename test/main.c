@@ -1,23 +1,39 @@
-#include "../../falsetype.h"
+#include "../falsetype.h"
 #include <stdio.h>
+#define ARENA_IMPLEMENTATION
+#include "../arena.h"
 
 int main() {
-    FST_Font font = FST_LoadFont("/usr/share/fonts/Adwaita/AdwaitaMono-Bold.ttf");
+    Arena arena = {0};
+    FST_Font font = FST_LoadFont("./ttf/Hack-Regular.ttf", &arena);
 
-    printf("-----offset_table-----\n\n");
-    printf("scaler_type: %d\n", font.offset_table.scaler_type);
-    printf("num_tables: %d\n", font.offset_table.num_tables);
-    printf("search_range: %d\n", font.offset_table.search_range);
-    printf("entry_selector: %d\n", font.offset_table.entry_selector);
-    printf("range_shift: %d\n", font.offset_table.range_shift);
+    printf("---MAXP---\n\n");
+    printf("version: %d.%d\n", font.tables.maxp.version.intager, font.tables.maxp.version.frac);
+    printf("num_glyphs: %d\n", font.tables.maxp.num_glyphs);
+    printf("max_points: %d\n", font.tables.maxp.max_points);
+    printf("max_contours: %d\n", font.tables.maxp.max_contours);
+    printf("max_component_points: %d\n", font.tables.maxp.max_component_points);
+    printf("max_component_contours: %d\n", font.tables.maxp.max_component_contours);
+    printf("max_zones: %d\n", font.tables.maxp.max_zones);
+    printf("max_twilight_points: %d\n", font.tables.maxp.max_twilight_points);
+    printf("max_storage: %d\n", font.tables.maxp.max_storage);
+    printf("max_function_defs: %d\n", font.tables.maxp.max_function_defs);
+    printf("max_instruction_defs: %d\n", font.tables.maxp.max_instruction_defs);
+    printf("max_stack_elements: %d\n", font.tables.maxp.max_stack_elements);
+    printf("max_size_of_instructions: %d\n", font.tables.maxp.max_size_of_instructions);
+    printf("max_component_elements: %d\n", font.tables.maxp.max_component_elements);
+    printf("max_component_depth: %d\n", font.tables.maxp.max_component_depth);
+
+    printf("----LOCA---\n\n");
+    for (int i = 0; i<font.tables.maxp.num_glyphs; i++) {
+        if (font.tables.head.index_to_loc_format) {
+            printf("%u\n", font.tables.loca.loca_long[i]);
+        } else {
+            printf("%u\n", font.tables.loca.loca_short[i]);
+        }
     
-    for (int i = 0; i<font.offset_table.num_tables-1; i++) {
-        printf("-----tabledir #%d-----\n\n", i);
-
-//        printf("tag: %s\n", font.tables[i].tag);
-        printf("checksum: %u\n", font.tables[i].checksum);
-        printf("offset: %u\n", font.tables[i].offset);
-        printf("length: %u\n", font.tables[i].length);
     }
+
+    arena_free(&arena);
     return 0;
 }
